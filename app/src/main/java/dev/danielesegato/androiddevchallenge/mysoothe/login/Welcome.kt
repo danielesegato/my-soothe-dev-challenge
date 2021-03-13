@@ -74,7 +74,7 @@ fun Welcome() {
 
 @Preview
 @Composable
-fun PreviewLoginLight() {
+fun PreviewWelcomeLight() {
     MyTheme(darkTheme = false) {
         Surface(color = MaterialTheme.colors.background) {
             Welcome()
@@ -84,7 +84,7 @@ fun PreviewLoginLight() {
 
 @Preview
 @Composable
-fun PreviewLoginDark() {
+fun PreviewWelcomeDark() {
     MyTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colors.background) {
             Welcome()
