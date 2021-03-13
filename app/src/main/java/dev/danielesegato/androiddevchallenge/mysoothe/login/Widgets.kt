@@ -15,7 +15,10 @@
  */
 package dev.danielesegato.androiddevchallenge.mysoothe.login
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,8 +27,11 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 
 @Composable
 fun MySootheButton(
@@ -58,5 +64,53 @@ fun MySootheButton(
 ) {
     MySootheButton(modifier, onClick, useSecondaryColor) {
         Text(text = text, style = MaterialTheme.typography.button)
+    }
+}
+
+@Preview
+@Composable
+fun PreviewMySootheButtons() {
+    Column(modifier = Modifier.fillMaxSize()) {
+        MyTheme(darkTheme = false) {
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.background),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                MySootheButton(
+                    Modifier.padding(16.dp),
+                    text = "SIGN UP",
+                    onClick = {}
+                )
+                MySootheButton(
+                    Modifier.padding(16.dp),
+                    text = "LOGIN",
+                    onClick = {},
+                    useSecondaryColor = true
+                )
+            }
+        }
+
+        MyTheme(darkTheme = true) {
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.background),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                MySootheButton(
+                    Modifier.padding(16.dp),
+                    text = "SIGN UP",
+                    onClick = {}
+                )
+                MySootheButton(
+                    Modifier.padding(16.dp),
+                    text = "LOGIN",
+                    onClick = {},
+                    useSecondaryColor = true
+                )
+            }
+        }
     }
 }
