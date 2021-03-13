@@ -7,7 +7,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.example.androiddevchallenge"
+        applicationId "dev.danielesegato.androiddevchallenge.mysoothe"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
@@ -73,6 +73,10 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
+
+    // Use the most recent version of Compose available.
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    debugImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     testImplementation 'junit:junit:4.13.2'
 
