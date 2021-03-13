@@ -20,9 +20,9 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import dev.danielesegato.androiddevchallenge.mysoothe.login.Welcome
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun MyApp() {
     Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+        Welcome()
     }
 }
 

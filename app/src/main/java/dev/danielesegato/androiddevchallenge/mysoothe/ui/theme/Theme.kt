@@ -20,6 +20,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
+import dev.danielesegato.androiddevchallenge.mysoothe.R
 
 private val DarkColorPalette = darkColors(
     primary = whiteFull,
@@ -43,6 +49,18 @@ private val LightColorPalette = lightColors(
     onSurface = gray800,
 )
 
+data class MySootheDrawables(
+    val isLight: Boolean,
+    val logoImageVector: ImageVector,
+    val welcomeBackgroundVector: ImageVector,
+    val loginBackgroundVector: ImageVector,
+)
+
+private val LocalMySootheDrawables =
+    staticCompositionLocalOf<MySootheDrawables> {
+        error("no MySootheDrawable provided")
+    }
+
 @Composable
 fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
     val colors = if (darkTheme) {
@@ -51,10 +69,37 @@ fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() (
         LightColorPalette
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = typography,
-        shapes = shapes,
-        content = content
-    )
+    val themeDrawables = if (darkTheme) {
+        MySootheDrawables(
+            isLight = false,
+            logoImageVector = ImageVector.vectorResource(R.drawable.ic_dark_logo),
+            welcomeBackgroundVector = ImageVector.vectorResource(R.drawable.bg_dark_welcome),
+            loginBackgroundVector = ImageVector.vectorResource(R.drawable.bg_dark_login),
+        )
+    } else {
+        MySootheDrawables(
+            isLight = true,
+            logoImageVector = ImageVector.vectorResource(R.drawable.ic_light_logo),
+            welcomeBackgroundVector = ImageVector.vectorResource(R.drawable.bg_light_welcome),
+            loginBackgroundVector = ImageVector.vectorResource(R.drawable.bg_light_login),
+        )
+    }
+
+    CompositionLocalProvider(
+        LocalMySootheDrawables provides themeDrawables
+    ) {
+        MaterialTheme(
+            colors = colors,
+            typography = typography,
+            shapes = shapes,
+            content = content
+        )
+    }
+}
+
+object MyTheme {
+    val drawables: MySootheDrawables
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalMySootheDrawables.current
 }
