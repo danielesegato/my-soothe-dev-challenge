@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,14 +31,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
-import dev.danielesegato.androiddevchallenge.mysoothe.Destinations
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 
 @Composable
-fun Welcome(
-    onLogin: () -> Unit = {},
-    onSignUp: () -> Unit = {},
+fun Login(
+    onLoginSuccessful: () -> Unit = {},
 ) {
     Box(
         modifier = Modifier
@@ -46,7 +44,7 @@ fun Welcome(
         Image(
             modifier = Modifier
                 .fillMaxSize(),
-            imageVector = MyTheme.drawables.welcomeBackgroundVector,
+            imageVector = MyTheme.drawables.loginBackgroundVector,
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
         )
@@ -57,22 +55,17 @@ fun Welcome(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Image(
+            Text(
                 modifier = Modifier
                     .padding(bottom = 32.dp),
-                imageVector = MyTheme.drawables.logoImageVector,
-                contentDescription = "",
-            )
-            MySootheButton(
-                text = "SIGN UP",
-                onClick = onSignUp,
+                style = MaterialTheme.typography.h1,
+                text = "LOG IN",
             )
             MySootheButton(
                 modifier = Modifier
                     .padding(top = 8.dp),
                 text = "LOG IN",
-                onClick = onLogin,
-                useSecondaryColor = true,
+                onClick = { /*TODO*/ },
             )
         }
     }
@@ -80,20 +73,20 @@ fun Welcome(
 
 @Preview
 @Composable
-fun PreviewWelcomeLight() {
+fun PreviewLoginLight() {
     MyTheme(darkTheme = false) {
         Surface(color = MaterialTheme.colors.background) {
-            Welcome()
+            Login()
         }
     }
 }
 
 @Preview
 @Composable
-fun PreviewWelcomeDark() {
+fun PreviewLoginDark() {
     MyTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colors.background) {
-            Welcome()
+            Login()
         }
     }
 }
