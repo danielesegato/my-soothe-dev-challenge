@@ -20,23 +20,37 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 
 @Composable
 fun Login(
     onLoginSuccessful: () -> Unit = {},
 ) {
+    var username by remember { mutableStateOf(TextFieldValue()) }
+    var password by remember { mutableStateOf(TextFieldValue()) }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -61,11 +75,56 @@ fun Login(
                 style = MaterialTheme.typography.h1,
                 text = "LOG IN",
             )
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .padding(horizontal = 16.dp),
+                value = username,
+                onValueChange = { username = it },
+                textStyle = MaterialTheme.typography.body1,
+                placeholder = {
+                    Text(
+                        text = "Email address",
+                        style = MaterialTheme.typography.body1,
+                    )
+                },
+            )
+            TextField(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .padding(horizontal = 16.dp),
+                value = password,
+                onValueChange = { password = it },
+                textStyle = MaterialTheme.typography.body1,
+                placeholder = {
+                    Text(
+                        text = "Password",
+                        style = MaterialTheme.typography.body1,
+                    )
+                },
+            )
             MySootheButton(
                 modifier = Modifier
                     .padding(top = 8.dp),
                 text = "LOG IN",
                 onClick = { /*TODO*/ },
+            )
+            Text(
+                modifier = Modifier
+                    .paddingFromBaseline(top = 32.dp),
+                text = buildAnnotatedString {
+                    append("Don't have an account? ")
+                    append(AnnotatedString(
+                        "Sign up",
+                        spanStyle = SpanStyle(
+                            textDecoration = TextDecoration.Underline,
+                        )),
+                    )
+                },
+                style = MaterialTheme.typography.body1,
             )
         }
     }
