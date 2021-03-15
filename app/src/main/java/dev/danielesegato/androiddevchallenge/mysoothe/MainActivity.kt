@@ -52,7 +52,7 @@ fun MyApp() {
     val navController = rememberNavController()
 
     Surface(color = MaterialTheme.colors.background) {
-        NavHost(navController = navController, startDestination = Destinations.LOGIN) {
+        NavHost(navController = navController, startDestination = Destinations.WELCOME) {
             composable(Destinations.WELCOME) {
                 Welcome(
                     onLogin = { navController.navigate(Destinations.LOGIN) }
