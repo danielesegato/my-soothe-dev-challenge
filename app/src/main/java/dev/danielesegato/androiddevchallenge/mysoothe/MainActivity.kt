@@ -55,7 +55,7 @@ fun MyApp() {
         NavHost(navController = navController, startDestination = Destinations.LOGIN) {
             composable(Destinations.WELCOME) {
                 Welcome(
-                    onLogin = { navController.navigate(Destinations.LOGIN)}
+                    onLogin = { navController.navigate(Destinations.LOGIN) }
                 )
             }
             composable(Destinations.LOGIN) {

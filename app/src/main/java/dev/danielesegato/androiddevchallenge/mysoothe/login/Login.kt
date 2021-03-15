@@ -117,11 +117,13 @@ fun Login(
                     .paddingFromBaseline(top = 32.dp),
                 text = buildAnnotatedString {
                     append("Don't have an account? ")
-                    append(AnnotatedString(
-                        "Sign up",
-                        spanStyle = SpanStyle(
-                            textDecoration = TextDecoration.Underline,
-                        )),
+                    append(
+                        AnnotatedString(
+                            "Sign up",
+                            spanStyle = SpanStyle(
+                                textDecoration = TextDecoration.Underline,
+                            )
+                        ),
                     )
                 },
                 style = MaterialTheme.typography.body1,
