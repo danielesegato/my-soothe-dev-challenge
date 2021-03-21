@@ -8,15 +8,16 @@ android {
 
     defaultConfig {
         applicationId "dev.danielesegato.androiddevchallenge.mysoothe"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        // we shouldn't need this with minSdk 23, but the github workflow fails
-        vectorDrawables.useSupportLibrary = true
+        // clipPath, used in vector images, is supported since minSdk 24,
+        // if we need lower minSdk we need to enable this:
+//        vectorDrawables.useSupportLibrary = true
     }
 
     signingConfigs {
