@@ -40,7 +40,6 @@ fun Welcome(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .systemBarsPadding()
     ) {
         Image(
             modifier = Modifier

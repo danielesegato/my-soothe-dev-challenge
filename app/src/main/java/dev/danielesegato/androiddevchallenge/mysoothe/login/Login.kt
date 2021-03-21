@@ -16,7 +16,6 @@
 package dev.danielesegato.androiddevchallenge.mysoothe.login
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,7 +42,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.systemBarsPadding
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 
 @Composable
@@ -55,7 +53,6 @@ fun Login(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .systemBarsPadding()
     ) {
         Image(
             modifier = Modifier
@@ -68,12 +65,11 @@ fun Login(
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 modifier = Modifier
-                    .padding(bottom = 32.dp),
+                    .paddingFromBaseline(top = 200.dp, bottom = 32.dp),
                 style = MaterialTheme.typography.h1,
                 text = "LOG IN",
             )
