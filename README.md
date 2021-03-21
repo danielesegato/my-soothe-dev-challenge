@@ -1,6 +1,11 @@
-# Compose #AndroidDevChallenge week 3 (ECMA)
+# Compose #AndroidDevChallenge week 3 (EMEA - MySoothe)
 
 This repository is my first try at Jetpack Compose, I'm not actually partecipating to the [#AndroidDevChallenge](https://developer.android.com/dev-challenge).
+
+I'll keep doing this on weekends or when I feel like spending some time on it, just for fun.
+
+
+Refer to the 3rd week of compose challenge, you can find it here: https://android-developers.googleblog.com/2021/03/android-dev-challenge-3.html.
 
 I started from [this template](https://github.com/android/android-dev-challenge-compose) which when I generated the project was [this commit](https://github.com/android/android-dev-challenge-compose/commit/da9da9d06e1724a754a696116819d71b3b26032a).
 
