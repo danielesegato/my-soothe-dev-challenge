@@ -43,6 +43,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.systemBarsPadding
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 
 @Composable
@@ -54,6 +55,7 @@ fun Login(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .systemBarsPadding()
     ) {
         Image(
             modifier = Modifier

@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.systemBarsPadding
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 
 @Composable
@@ -39,6 +40,7 @@ fun Welcome(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .systemBarsPadding()
     ) {
         Image(
             modifier = Modifier
