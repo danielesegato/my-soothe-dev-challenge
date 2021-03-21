@@ -58,6 +58,11 @@ fun MyApp() {
 
     Surface(color = MaterialTheme.colors.background) {
         NavHost(navController = navController, startDestination = Destinations.WELCOME) {
+            // animations between destination is currently (1.0.0-alpha09) not supported, see
+            // https://issuetracker.google.com/issues/172112072
+            // and I couldn't find an easy / straight forward way to animate between screens
+            // except the one suggested in that issue, which i s a bit hacky
+
             composable(Destinations.WELCOME) {
                 Welcome(
                     onLogin = { navController.navigate(Destinations.LOGIN) }
