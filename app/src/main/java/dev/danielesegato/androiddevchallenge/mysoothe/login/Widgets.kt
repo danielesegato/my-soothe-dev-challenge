@@ -44,12 +44,16 @@ fun MySootheButton(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .height(76.dp),
+            .height(72.dp),
         onClick = onClick,
         shape = MaterialTheme.shapes.medium,
         colors = if (useSecondaryColor) ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.secondary
-        ) else ButtonDefaults.buttonColors()
+            backgroundColor = MaterialTheme.colors.secondary,
+            contentColor = MaterialTheme.colors.onSecondary,
+        ) else ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.primary,
+            contentColor = MaterialTheme.colors.onPrimary,
+        ),
     ) {
         content()
     }
