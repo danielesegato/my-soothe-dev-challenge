@@ -90,7 +90,10 @@ fun Login(
                     backgroundColor = MaterialTheme.colors.surface,
                     textColor = MaterialTheme.colors.onSurface,
                 ),
+                // TODO how do I increase the indicator width?
                 placeholder = {
+                    // TODO how do I center vertically the text?
+                    // TODO how do I add padding to it?
                     Text(
                         text = stringResource(R.string.login_field_email_hint),
                         style = MaterialTheme.typography.body1,
