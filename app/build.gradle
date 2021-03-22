@@ -79,6 +79,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha09"
     implementation "com.google.accompanist:accompanist-insets:0.6.2"
+    implementation "com.google.accompanist:accompanist-coil:0.6.2"
 
     // Use the most recent version of Compose available.
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"

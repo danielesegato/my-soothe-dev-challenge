@@ -16,11 +16,22 @@
 package dev.danielesegato.androiddevchallenge.mysoothe.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -31,7 +42,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -39,24 +52,40 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.coil.CoilImage
 import dev.danielesegato.androiddevchallenge.mysoothe.R
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
+import kotlin.math.roundToInt
 
 val horizontalPadding = 16.dp
 
 @Composable
 fun Home() {
-    Column {
+    Column(Modifier.fillMaxSize()) {
         Search(
             Modifier.padding(top = 56.dp)
         )
+        HomeSection(title = "FAVOURITE COLLECTIONS") {
+            TwoRowCarousel(favoriteCollection) { record ->
+                RectangularItem(record)
+            }
+        }
+        HomeSection(title = "ALIGN YOUR BODY") {
+            SingleRowCarousel(alignYourBody) { record ->
+                CircleItem(record)
+            }
+        }
+        HomeSection(title = "ALIGN YOUR MIND") {
+            SingleRowCarousel(alignYourBody) { record ->
+                CircleItem(record)
+            }
+        }
     }
 }
 
 @Composable
 fun Search(modifier: Modifier = Modifier) {
     var searchTerm by remember { mutableStateOf(TextFieldValue()) }
-
     TextField(
         modifier = modifier
             .fillMaxWidth()
@@ -86,6 +115,128 @@ fun Search(modifier: Modifier = Modifier) {
             )
         },
     )
+}
+
+@Composable
+fun HomeSection(
+    title: String,
+    content: @Composable () -> Unit
+) {
+    Column {
+        Text(
+            modifier = Modifier
+                .paddingFromBaseline(top = 40.dp)
+                .padding(horizontal = horizontalPadding),
+            text = title,
+            style = MaterialTheme.typography.h2,
+            color = MaterialTheme.colors.onBackground,
+        )
+        content()
+    }
+}
+
+@Composable
+fun SingleRowCarousel(
+    records: List<Record>,
+    itemContent: @Composable LazyItemScope.(record: Record) -> Unit
+) {
+    LazyRow(
+        modifier = Modifier.padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        item {
+            Spacer(modifier = Modifier.width(8.dp))
+        }
+        records.forEach { record ->
+            item {
+                itemContent(record)
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.width(8.dp))
+        }
+    }
+}
+
+@Composable
+fun TwoRowCarousel(
+    records: List<Record>,
+    itemContent: @Composable LazyItemScope.(record: Record) -> Unit
+) {
+    LazyRow(
+        modifier = Modifier.padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        item {
+            Spacer(modifier = Modifier.width(8.dp))
+        }
+        records.chunked(2).forEach { recordPair ->
+            item {
+                Column(
+                    verticalArrangement = Arrangement.Top,
+                ) {
+                    itemContent(recordPair[0])
+                    if (recordPair.size > 1) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        itemContent(recordPair[1])
+                    }
+                }
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.width(8.dp))
+        }
+    }
+}
+
+@Composable
+fun RectangularItem(record: Record) {
+    Row(
+        modifier = Modifier
+            .size(width = 192.dp, height = 56.dp)
+            .clip(MaterialTheme.shapes.small)
+            .background(MaterialTheme.colors.surface),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        CoilImage(
+            modifier = Modifier.size(56.dp),
+            data = record.squareImageUrlOfSize((56.dp).value.roundToInt()),
+            contentDescription = null,
+        )
+        Text(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .wrapContentSize(align = Alignment.CenterStart),
+            text = record.title,
+            style = MaterialTheme.typography.h3,
+            color = MaterialTheme.colors.onSurface,
+        )
+    }
+}
+
+@Composable
+fun CircleItem(record: Record) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        CoilImage(
+            modifier = Modifier
+                .size(88.dp)
+                .clip(CircleShape),
+            data = record.squareImageUrlOfSize((88.dp).value.roundToInt()),
+            contentDescription = null,
+        )
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .paddingFromBaseline(24.dp)
+                .wrapContentSize(align = Alignment.Center),
+            text = record.title,
+            style = MaterialTheme.typography.h3,
+            color = MaterialTheme.colors.onBackground,
+        )
+    }
 }
 
 @Preview
