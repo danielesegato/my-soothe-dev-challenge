@@ -118,7 +118,7 @@ fun Login(
                 modifier = Modifier
                     .padding(top = 8.dp),
                 text = "LOG IN",
-                onClick = { /*TODO*/ },
+                onClick = { onLoginSuccessful() },
             )
             Text(
                 modifier = Modifier

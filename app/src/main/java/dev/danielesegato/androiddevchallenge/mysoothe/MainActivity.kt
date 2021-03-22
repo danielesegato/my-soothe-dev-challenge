@@ -28,6 +28,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
+import dev.danielesegato.androiddevchallenge.mysoothe.home.Home
 import dev.danielesegato.androiddevchallenge.mysoothe.login.Login
 import dev.danielesegato.androiddevchallenge.mysoothe.login.Welcome
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 object Destinations {
     const val WELCOME = "welcome"
     const val LOGIN = "login"
+    const val HOME = "home"
 }
 
 // Start building your app here!
@@ -69,7 +71,12 @@ fun MyApp() {
                 )
             }
             composable(Destinations.LOGIN) {
-                Login()
+                Login(
+                    onLoginSuccessful = { navController.navigate(Destinations.HOME)}
+                )
+            }
+            composable(Destinations.HOME) {
+                Home()
             }
         }
     }
