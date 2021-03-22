@@ -64,6 +64,7 @@ fun Search(modifier: Modifier = Modifier) {
             .padding(horizontal = horizontalPadding),
         value = searchTerm,
         onValueChange = { searchTerm = it },
+        singleLine = true,
         textStyle = MaterialTheme.typography.body1,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = MaterialTheme.colors.surface,
@@ -78,7 +79,6 @@ fun Search(modifier: Modifier = Modifier) {
             )
         },
         placeholder = {
-            // TODO how do I center vertically the text?
             Text(
                 text = stringResource(R.string.home_field_search_hint),
                 style = MaterialTheme.typography.body1,

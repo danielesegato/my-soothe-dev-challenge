@@ -85,6 +85,7 @@ fun Login(
                     .padding(horizontal = 16.dp),
                 value = username,
                 onValueChange = { username = it },
+                singleLine = true,
                 textStyle = MaterialTheme.typography.body1,
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = MaterialTheme.colors.surface,
@@ -92,7 +93,6 @@ fun Login(
                 ),
                 // TODO how do I increase the indicator width?
                 placeholder = {
-                    // TODO how do I center vertically the text?
                     // TODO how do I add padding to it?
                     Text(
                         text = stringResource(R.string.login_field_email_hint),
@@ -109,6 +109,7 @@ fun Login(
                     .padding(horizontal = 16.dp),
                 value = password,
                 onValueChange = { password = it },
+                singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 textStyle = MaterialTheme.typography.body1,
                 colors = TextFieldDefaults.textFieldColors(
