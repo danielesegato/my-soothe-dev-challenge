@@ -97,6 +97,7 @@ fun Login(
                     Text(
                         text = stringResource(R.string.login_field_email_hint),
                         style = MaterialTheme.typography.body1,
+                        color = MaterialTheme.colors.onSurface,
                     )
                 },
             )
@@ -118,6 +119,7 @@ fun Login(
                     Text(
                         text = stringResource(R.string.login_field_password_hint),
                         style = MaterialTheme.typography.body1,
+                        color = MaterialTheme.colors.onSurface,
                     )
                 },
             )
