@@ -36,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -43,6 +44,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.danielesegato.androiddevchallenge.mysoothe.R
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 
 @Composable
@@ -73,7 +75,7 @@ fun Login(
                     .paddingFromBaseline(top = 200.dp, bottom = 32.dp),
                 style = MaterialTheme.typography.h1,
                 color = MaterialTheme.colors.onBackground,
-                text = "LOG IN",
+                text = stringResource(R.string.login_title),
             )
             TextField(
                 modifier = Modifier
@@ -89,7 +91,7 @@ fun Login(
                 ),
                 placeholder = {
                     Text(
-                        text = "Email address",
+                        text = stringResource(R.string.login_field_email_hint),
                         style = MaterialTheme.typography.body1,
                     )
                 },
@@ -109,7 +111,7 @@ fun Login(
                 ),
                 placeholder = {
                     Text(
-                        text = "Password",
+                        text = stringResource(R.string.login_field_password_hint),
                         style = MaterialTheme.typography.body1,
                     )
                 },
@@ -117,17 +119,17 @@ fun Login(
             MySootheButton(
                 modifier = Modifier
                     .padding(top = 8.dp),
-                text = "LOG IN",
+                text = stringResource(R.string.login_btn_login),
                 onClick = { onLoginSuccessful() },
             )
             Text(
                 modifier = Modifier
                     .paddingFromBaseline(top = 32.dp),
                 text = buildAnnotatedString {
-                    append("Don't have an account? ")
+                    append(stringResource(R.string.login_label_noaccount_part1_question))
                     append(
                         AnnotatedString(
-                            "Sign up",
+                            stringResource(R.string.login_label_noaccount_part2_signup),
                             spanStyle = SpanStyle(
                                 textDecoration = TextDecoration.Underline,
                             )
