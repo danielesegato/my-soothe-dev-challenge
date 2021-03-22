@@ -5,6 +5,10 @@
 # Mac files
 .DS_Store
 
+# Linux files
+*~
+*.tmp
+
 # files for the dex VM
 *.dex
 
