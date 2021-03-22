@@ -72,7 +72,7 @@ fun MyApp() {
             }
             composable(Destinations.LOGIN) {
                 Login(
-                    onLoginSuccessful = { navController.navigate(Destinations.HOME)}
+                    onLoginSuccessful = { navController.navigate(Destinations.HOME) }
                 )
             }
             composable(Destinations.HOME) {
