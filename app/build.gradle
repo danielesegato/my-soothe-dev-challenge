@@ -8,12 +8,16 @@ android {
 
     defaultConfig {
         applicationId "dev.danielesegato.androiddevchallenge.mysoothe"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // clipPath, used in vector images, is supported since minSdk 24,
+        // if we need lower minSdk we need to enable this:
+//        vectorDrawables.useSupportLibrary = true
     }
 
     signingConfigs {
@@ -73,6 +77,8 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
+    implementation "androidx.navigation:navigation-compose:1.0.0-alpha09"
+    implementation "com.google.accompanist:accompanist-insets:0.6.2"
 
     // Use the most recent version of Compose available.
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
