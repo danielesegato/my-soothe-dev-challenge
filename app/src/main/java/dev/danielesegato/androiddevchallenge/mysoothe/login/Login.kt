@@ -27,6 +27,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -71,6 +72,7 @@ fun Login(
                 modifier = Modifier
                     .paddingFromBaseline(top = 200.dp, bottom = 32.dp),
                 style = MaterialTheme.typography.h1,
+                color = MaterialTheme.colors.onBackground,
                 text = "LOG IN",
             )
             TextField(
@@ -81,6 +83,10 @@ fun Login(
                 value = username,
                 onValueChange = { username = it },
                 textStyle = MaterialTheme.typography.body1,
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = MaterialTheme.colors.surface,
+                    textColor = MaterialTheme.colors.onSurface,
+                ),
                 placeholder = {
                     Text(
                         text = "Email address",
@@ -97,6 +103,10 @@ fun Login(
                 value = password,
                 onValueChange = { password = it },
                 textStyle = MaterialTheme.typography.body1,
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = MaterialTheme.colors.surface,
+                    textColor = MaterialTheme.colors.onSurface,
+                ),
                 placeholder = {
                     Text(
                         text = "Password",
@@ -125,6 +135,7 @@ fun Login(
                     )
                 },
                 style = MaterialTheme.typography.body1,
+                color = MaterialTheme.colors.onBackground,
             )
         }
     }
