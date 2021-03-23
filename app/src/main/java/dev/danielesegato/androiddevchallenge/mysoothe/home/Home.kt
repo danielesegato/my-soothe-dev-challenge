@@ -19,6 +19,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,10 +28,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -141,19 +142,11 @@ fun SingleRowCarousel(
     itemContent: @Composable LazyItemScope.(record: Record) -> Unit
 ) {
     LazyRow(
-        modifier = Modifier.padding(vertical = 8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        item {
-            Spacer(modifier = Modifier.width(8.dp))
-        }
-        records.forEach { record ->
-            item {
-                itemContent(record)
-            }
-        }
-        item {
-            Spacer(modifier = Modifier.width(8.dp))
+        items(records) { record ->
+            itemContent(record)
         }
     }
 }
@@ -164,27 +157,19 @@ fun TwoRowCarousel(
     itemContent: @Composable LazyItemScope.(record: Record) -> Unit
 ) {
     LazyRow(
-        modifier = Modifier.padding(vertical = 8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        item {
-            Spacer(modifier = Modifier.width(8.dp))
-        }
-        records.chunked(2).forEach { recordPair ->
-            item {
-                Column(
-                    verticalArrangement = Arrangement.Top,
-                ) {
-                    itemContent(recordPair[0])
-                    if (recordPair.size > 1) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                        itemContent(recordPair[1])
-                    }
+        items(records.chunked(2)) { recordPair ->
+            Column(
+                verticalArrangement = Arrangement.Top,
+            ) {
+                itemContent(recordPair[0])
+                if (recordPair.size > 1) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    itemContent(recordPair[1])
                 }
             }
-        }
-        item {
-            Spacer(modifier = Modifier.width(8.dp))
         }
     }
 }
