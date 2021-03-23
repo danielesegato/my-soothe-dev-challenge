@@ -17,11 +17,13 @@ package dev.danielesegato.androiddevchallenge.mysoothe.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,8 +34,16 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.FabPosition
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -47,6 +57,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -56,29 +67,126 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.CoilImage
 import dev.danielesegato.androiddevchallenge.mysoothe.R
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
+import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.bottomNavigationElevation
 import kotlin.math.roundToInt
 
 val horizontalPadding = 16.dp
 
 @Composable
 fun Home() {
-    Column(Modifier.fillMaxSize()) {
-        Search(
-            Modifier.padding(top = 56.dp)
-        )
-        HomeSection(title = "FAVOURITE COLLECTIONS") {
-            TwoRowCarousel(favoriteCollection) { record ->
-                RectangularItem(record)
+    Scaffold(
+        modifier = Modifier,
+        bottomBar = {
+            Surface(elevation = bottomNavigationElevation) {
+                HomeNavBar()
+            }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { /*TODO*/ },
+                shape = CircleShape,
+                backgroundColor = MaterialTheme.colors.primary,
+                contentColor = MaterialTheme.colors.onPrimary,
+            ) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_play_arrow_24),
+                    tint = MaterialTheme.colors.onPrimary,
+                    contentDescription = "PLAY",
+                )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Center,
+        isFloatingActionButtonDocked = true,
+    ) { scaffoldPadding ->
+        Column(
+            Modifier
+                .padding(scaffoldPadding)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            Search(
+                Modifier.padding(top = 56.dp)
+            )
+            HomeSection(title = "FAVOURITE COLLECTIONS") {
+                TwoRowCarousel(favoriteCollection) { record ->
+                    RectangularItem(record)
+                }
+            }
+            HomeSection(title = "ALIGN YOUR BODY") {
+                SingleRowCarousel(alignYourBody) { record ->
+                    CircleItem(record)
+                }
+            }
+            HomeSection(title = "ALIGN YOUR MIND") {
+                SingleRowCarousel(alignYourMind) { record ->
+                    CircleItem(record)
+                }
             }
         }
-        HomeSection(title = "ALIGN YOUR BODY") {
-            SingleRowCarousel(alignYourBody) { record ->
-                CircleItem(record)
+    }
+}
+
+@Composable
+fun HomeNavBar() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp),
+    ) {
+        Button(
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .fillMaxHeight(),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = MaterialTheme.colors.background,
+                contentColor = MaterialTheme.colors.onBackground,
+            ),
+            onClick = { /*TODO*/ },
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Icon(
+                    modifier = Modifier.size(18.dp),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_spa_24),
+                    tint = MaterialTheme.colors.onBackground,
+                    contentDescription = null,
+                )
+                Text(
+                    text = "HOME",
+                    style = MaterialTheme.typography.caption,
+                    color = MaterialTheme.colors.onBackground,
+                )
             }
         }
-        HomeSection(title = "ALIGN YOUR MIND") {
-            SingleRowCarousel(alignYourBody) { record ->
-                CircleItem(record)
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            shape = RectangleShape,
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = MaterialTheme.colors.background,
+                contentColor = MaterialTheme.colors.onBackground,
+            ),
+            onClick = { /*TODO*/ },
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Icon(
+                    modifier = Modifier.size(18.dp),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_account_circle_24),
+                    tint = MaterialTheme.colors.onBackground,
+                    contentDescription = null,
+                )
+                Text(
+                    text = "PROFILE",
+                    style = MaterialTheme.typography.caption,
+                    color = MaterialTheme.colors.onBackground,
+                )
             }
         }
     }
@@ -175,18 +283,29 @@ fun TwoRowCarousel(
 }
 
 @Composable
-fun RectangularItem(record: Record) {
+fun RectangularItem(
+    record: Record,
+    onItemClick: (record: Record) -> Unit = {}
+) {
     Row(
         modifier = Modifier
             .size(width = 192.dp, height = 56.dp)
             .clip(MaterialTheme.shapes.small)
-            .background(MaterialTheme.colors.surface),
+            .background(MaterialTheme.colors.surface)
+            .clickable { onItemClick(record) },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CoilImage(
             modifier = Modifier.size(56.dp),
             data = record.squareImageUrlOfSize((56.dp).value.roundToInt()),
             contentDescription = null,
+            loading = {
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.secondary),
+                )
+            },
         )
         Text(
             modifier = Modifier
@@ -201,8 +320,13 @@ fun RectangularItem(record: Record) {
 }
 
 @Composable
-fun CircleItem(record: Record) {
+fun CircleItem(
+    record: Record,
+    onItemClick: (record: Record) -> Unit = {}
+) {
     Column(
+        modifier = Modifier
+            .clickable { onItemClick(record) },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CoilImage(
@@ -211,6 +335,13 @@ fun CircleItem(record: Record) {
                 .clip(CircleShape),
             data = record.squareImageUrlOfSize((88.dp).value.roundToInt()),
             contentDescription = null,
+            loading = {
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.secondary),
+                )
+            },
         )
         Text(
             modifier = Modifier
