@@ -37,8 +37,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -57,14 +55,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.insets.LocalWindowInsets
 import dev.danielesegato.androiddevchallenge.mysoothe.R
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.bottomNavigationElevation
@@ -77,7 +76,10 @@ fun Home() {
     Scaffold(
         modifier = Modifier,
         bottomBar = {
-            Surface(elevation = bottomNavigationElevation) {
+            Surface(
+                elevation = bottomNavigationElevation,
+                color = MaterialTheme.colors.background
+            ) {
                 HomeNavBar()
             }
         },
@@ -129,65 +131,55 @@ fun Home() {
 
 @Composable
 fun HomeNavBar() {
+    val insets = LocalWindowInsets.current
+    val navBarInsetDp = with(LocalDensity.current) {
+        insets.navigationBars.bottom.toDp()
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(bottom = navBarInsetDp)
             .height(56.dp),
     ) {
-        Button(
+        Column(
             modifier = Modifier
                 .fillMaxWidth(0.5f)
-                .fillMaxHeight(),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.onBackground,
-            ),
-            onClick = { /*TODO*/ },
+                .fillMaxHeight()
+                .clickable {  },
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Icon(
-                    modifier = Modifier.size(18.dp),
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_spa_24),
-                    tint = MaterialTheme.colors.onBackground,
-                    contentDescription = null,
-                )
-                Text(
-                    text = "HOME",
-                    style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.onBackground,
-                )
-            }
+            Icon(
+                modifier = Modifier.size(18.dp),
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_spa_24),
+                tint = MaterialTheme.colors.onBackground,
+                contentDescription = null,
+            )
+            Text(
+                text = "HOME",
+                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colors.onBackground,
+            )
         }
-        Button(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(),
-            shape = RectangleShape,
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.onBackground,
-            ),
-            onClick = { /*TODO*/ },
+                .fillMaxHeight()
+                .clickable {  },
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Icon(
-                    modifier = Modifier.size(18.dp),
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_account_circle_24),
-                    tint = MaterialTheme.colors.onBackground,
-                    contentDescription = null,
-                )
-                Text(
-                    text = "PROFILE",
-                    style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.onBackground,
-                )
-            }
+            Icon(
+                modifier = Modifier.size(18.dp),
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_account_circle_24),
+                tint = MaterialTheme.colors.onBackground,
+                contentDescription = null,
+            )
+            Text(
+                text = "PROFILE",
+                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colors.onBackground,
+            )
         }
     }
 }
