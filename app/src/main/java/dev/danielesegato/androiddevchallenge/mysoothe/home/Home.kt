@@ -85,7 +85,6 @@ data class TabItem<T>(
     @DrawableRes val icon: Int,
 )
 
-
 val homeSections = listOf(
     TabItem(
         Tab.Home,

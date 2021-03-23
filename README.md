@@ -1,5 +1,7 @@
 # Compose #AndroidDevChallenge week 3 (EMEA - MySoothe)
 
+![Workflow result](https://github.com/danielesegato/my-soothe-dev-challenge/workflows/Check/badge.svg)
+
 This repository is my first try at Jetpack Compose, I'm not actually partecipating to the [#AndroidDevChallenge](https://developer.android.com/dev-challenge).
 
 I'll keep doing this on weekends or when I feel like spending some time on it, just for fun.
@@ -15,6 +17,23 @@ Internally, Spotless uses [ktlint](https://github.com/pinterest/ktlint) to check
 To set up ktlint correctly with Android Studio, follow one of the [listed setup options](https://github.com/pinterest/ktlint#-with-intellij-idea).
 
 Before committing your code, run `./gradlew app:spotlessApply` to automatically format your code.
+
+## Screenshots
+
+Welcome screen:
+
+<img src="/results/screenshot_1_welcome_light.png" width="260">&emsp;<img src="/results/screenshot_2_welcome_dark.png" width="260">
+
+
+Login screen:
+
+<img src="/results/screenshot_3_login_light.png" width="260">&emsp;<img src="/results/screenshot_4_login_dark.png" width="260">
+
+
+Home screen:
+
+<img src="/results/screenshot_5_home_light.png" width="260">&emsp;<img src="/results/screenshot_6_home_dark.png" width="260">
+
 
 ## License
 ```
