@@ -28,7 +28,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
-import dev.danielesegato.androiddevchallenge.mysoothe.home.Home
+import dev.danielesegato.androiddevchallenge.mysoothe.home.HomeScreen
 import dev.danielesegato.androiddevchallenge.mysoothe.login.Login
 import dev.danielesegato.androiddevchallenge.mysoothe.login.Welcome
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
@@ -76,7 +76,7 @@ fun MyApp() {
                 )
             }
             composable(Destinations.HOME) {
-                Home()
+                HomeScreen()
             }
         }
     }

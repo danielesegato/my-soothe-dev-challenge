@@ -15,6 +15,8 @@
  */
 package dev.danielesegato.androiddevchallenge.mysoothe.home
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,7 +25,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,6 +38,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -71,121 +74,148 @@ import kotlin.math.roundToInt
 
 val horizontalPadding = 16.dp
 
+data class NavSection(
+    val id: String,
+    @StringRes val text: Int,
+    @DrawableRes val icon: Int,
+)
+
+val homeSections = listOf(
+    NavSection(
+        "HOME",
+        R.string.home_tab_home,
+        R.drawable.ic_baseline_spa_24,
+    ),
+    NavSection(
+        "PROFILE",
+        R.string.home_tab_profile,
+        R.drawable.ic_baseline_account_circle_24,
+    )
+)
+
 @Composable
-fun Home() {
+fun HomeScreen() {
     Scaffold(
         modifier = Modifier,
         bottomBar = {
-            Surface(
-                elevation = bottomNavigationElevation,
-                color = MaterialTheme.colors.background
-            ) {
-                HomeNavBar()
-            }
+            HomeNavBar(homeSections)
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /*TODO*/ },
-                shape = CircleShape,
-                backgroundColor = MaterialTheme.colors.primary,
-                contentColor = MaterialTheme.colors.onPrimary,
-            ) {
-                Icon(
-                    modifier = Modifier.size(24.dp),
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_play_arrow_24),
-                    tint = MaterialTheme.colors.onPrimary,
-                    contentDescription = "PLAY",
-                )
-            }
+            HomeFab()
         },
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
     ) { scaffoldPadding ->
-        Column(
-            Modifier
+        Home(
+            modifier = Modifier
                 .padding(scaffoldPadding)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
-            Search(
-                Modifier.padding(top = 56.dp)
-            )
-            HomeSection(title = "FAVOURITE COLLECTIONS") {
-                TwoRowCarousel(favoriteCollection) { record ->
-                    RectangularItem(record)
-                }
+        )
+    }
+}
+
+@Composable
+private fun Home(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        Search(
+            Modifier.padding(top = 56.dp)
+        )
+        HomeSubSection(title = stringResource(R.string.home_section_favcollection)) {
+            TwoRowCarousel(favoriteCollection) { record ->
+                RectangularItem(
+                    record,
+                    onItemClick = {},
+                )
             }
-            HomeSection(title = "ALIGN YOUR BODY") {
-                SingleRowCarousel(alignYourBody) { record ->
-                    CircleItem(record)
-                }
+        }
+        HomeSubSection(title = stringResource(R.string.home_section_alignbody)) {
+            SingleRowCarousel(alignYourBody) { record ->
+                CircleItem(
+                    record,
+                    onItemClick = {},
+                )
             }
-            HomeSection(title = "ALIGN YOUR MIND") {
-                SingleRowCarousel(alignYourMind) { record ->
-                    CircleItem(record)
-                }
+        }
+        HomeSubSection(title = stringResource(R.string.home_section_alignmind)) {
+            SingleRowCarousel(alignYourMind) { record ->
+                CircleItem(
+                    record,
+                    onItemClick = {},
+                )
             }
         }
     }
 }
 
 @Composable
-fun HomeNavBar() {
+private fun HomeFab(
+    onClick: () -> Unit = {}
+) {
+    FloatingActionButton(
+        onClick = { onClick() },
+        shape = CircleShape,
+        backgroundColor = MaterialTheme.colors.primary,
+        contentColor = MaterialTheme.colors.onPrimary,
+    ) {
+        Icon(
+            modifier = Modifier.size(24.dp),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_play_arrow_24),
+            tint = MaterialTheme.colors.onPrimary,
+            contentDescription = stringResource(R.string.home_action_play),
+        )
+    }
+}
+
+@Composable
+fun HomeNavBar(
+    sections: List<NavSection>,
+    currentSectionId: String = sections[0].id,
+    onSectionClicked: (sectionId: String, reSelection: Boolean) -> Unit = { _, _ -> },
+) {
     val insets = LocalWindowInsets.current
     val navBarInsetDp = with(LocalDensity.current) {
         insets.navigationBars.bottom.toDp()
     }
-    Row(
+    BottomNavigation(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = navBarInsetDp)
-            .height(56.dp),
+            .padding(bottom = navBarInsetDp),
+        backgroundColor = MaterialTheme.colors.background,
+        elevation = bottomNavigationElevation,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .fillMaxHeight()
-                .clickable {  },
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Icon(
-                modifier = Modifier.size(18.dp),
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_spa_24),
-                tint = MaterialTheme.colors.onBackground,
-                contentDescription = null,
-            )
-            Text(
-                text = "HOME",
-                style = MaterialTheme.typography.caption,
-                color = MaterialTheme.colors.onBackground,
-            )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .clickable {  },
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Icon(
-                modifier = Modifier.size(18.dp),
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_account_circle_24),
-                tint = MaterialTheme.colors.onBackground,
-                contentDescription = null,
-            )
-            Text(
-                text = "PROFILE",
-                style = MaterialTheme.typography.caption,
-                color = MaterialTheme.colors.onBackground,
+        sections.forEach { section ->
+            BottomNavigationItem(
+                selected = section.id == currentSectionId,
+                onClick = { onSectionClicked(section.id, section.id == currentSectionId) },
+                icon = {
+                    Icon(
+                        modifier = Modifier.size(18.dp),
+                        imageVector = ImageVector.vectorResource(id = section.icon),
+                        tint = MaterialTheme.colors.onBackground,
+                        contentDescription = null,
+                    )
+                },
+                label = {
+                    Text(
+                        text = stringResource(id = section.text),
+                        style = MaterialTheme.typography.caption,
+                        color = MaterialTheme.colors.onBackground,
+                    )
+                },
             )
         }
     }
 }
 
 @Composable
-fun Search(modifier: Modifier = Modifier) {
+fun Search(
+    modifier: Modifier = Modifier,
+    onSearchChanged: (term: String) -> Unit = {},
+) {
     var searchTerm by remember { mutableStateOf(TextFieldValue()) }
     TextField(
         modifier = modifier
@@ -193,7 +223,11 @@ fun Search(modifier: Modifier = Modifier) {
             .height(56.dp)
             .padding(horizontal = horizontalPadding),
         value = searchTerm,
-        onValueChange = { searchTerm = it },
+        onValueChange = {
+            searchTerm = it
+            val q = it.text.trim()
+            onSearchChanged(q)
+        },
         singleLine = true,
         textStyle = MaterialTheme.typography.body1,
         colors = TextFieldDefaults.textFieldColors(
@@ -219,7 +253,7 @@ fun Search(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun HomeSection(
+fun HomeSubSection(
     title: String,
     content: @Composable () -> Unit
 ) {
@@ -242,7 +276,7 @@ fun SingleRowCarousel(
     itemContent: @Composable LazyItemScope.(record: Record) -> Unit
 ) {
     LazyRow(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        contentPadding = PaddingValues(horizontal = horizontalPadding, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(records) { record ->
@@ -257,7 +291,7 @@ fun TwoRowCarousel(
     itemContent: @Composable LazyItemScope.(record: Record) -> Unit
 ) {
     LazyRow(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        contentPadding = PaddingValues(horizontal = horizontalPadding, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(records.chunked(2)) { recordPair ->
@@ -352,7 +386,7 @@ fun CircleItem(
 fun PreviewHomeLight() {
     MyTheme(darkTheme = false) {
         Surface(color = MaterialTheme.colors.background) {
-            Home()
+            HomeScreen()
         }
     }
 }
@@ -362,7 +396,7 @@ fun PreviewHomeLight() {
 fun PreviewHomeDark() {
     MyTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colors.background) {
-            Home()
+            HomeScreen()
         }
     }
 }

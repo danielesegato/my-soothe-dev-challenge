@@ -22,4 +22,10 @@
     <string name="login_label_noaccount_part2_signup">Sign up</string>
     <string name="home_field_search_leadingicon_desc">Search Box</string>
     <string name="home_field_search_hint">Search</string>
+    <string name="home_tab_home">HOME</string>
+    <string name="home_tab_profile">PROFILE</string>
+    <string name="home_section_favcollection">FAVOURITE COLLECTIONS</string>
+    <string name="home_section_alignbody">ALIGN YOUR BODY</string>
+    <string name="home_section_alignmind">ALIGN YOUR MIND</string>
+    <string name="home_action_play">PLAY</string>
 </resources>
