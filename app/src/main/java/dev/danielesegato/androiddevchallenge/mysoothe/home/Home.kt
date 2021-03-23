@@ -74,31 +74,42 @@ import kotlin.math.roundToInt
 
 val horizontalPadding = 16.dp
 
-data class NavSection(
-    val id: String,
+enum class Tab {
+    Home,
+    Profile,
+}
+
+data class TabItem<T>(
+    val id: T,
     @StringRes val text: Int,
     @DrawableRes val icon: Int,
 )
 
+
 val homeSections = listOf(
-    NavSection(
-        "HOME",
+    TabItem(
+        Tab.Home,
         R.string.home_tab_home,
         R.drawable.ic_baseline_spa_24,
     ),
-    NavSection(
-        "PROFILE",
+    TabItem(
+        Tab.Profile,
         R.string.home_tab_profile,
         R.drawable.ic_baseline_account_circle_24,
     )
 )
 
 @Composable
-fun HomeScreen() {
+fun Home() {
     Scaffold(
         modifier = Modifier,
         bottomBar = {
-            HomeNavBar(homeSections)
+            HomeNavBar(
+                homeSections,
+                currentTab = Tab.Home,
+                onTabClicked = { tab, reSelection ->
+                }
+            )
         },
         floatingActionButton = {
             HomeFab()
@@ -106,7 +117,7 @@ fun HomeScreen() {
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
     ) { scaffoldPadding ->
-        Home(
+        HomeTabContent(
             modifier = Modifier
                 .padding(scaffoldPadding)
         )
@@ -114,7 +125,7 @@ fun HomeScreen() {
 }
 
 @Composable
-private fun Home(
+private fun HomeTabContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -172,10 +183,10 @@ private fun HomeFab(
 }
 
 @Composable
-fun HomeNavBar(
-    sections: List<NavSection>,
-    currentSectionId: String = sections[0].id,
-    onSectionClicked: (sectionId: String, reSelection: Boolean) -> Unit = { _, _ -> },
+fun <T> HomeNavBar(
+    tabs: List<TabItem<T>>,
+    currentTab: T = tabs[0].id,
+    onTabClicked: (sectionId: T, reSelection: Boolean) -> Unit = { _, _ -> },
 ) {
     val insets = LocalWindowInsets.current
     val navBarInsetDp = with(LocalDensity.current) {
@@ -187,10 +198,10 @@ fun HomeNavBar(
         backgroundColor = MaterialTheme.colors.background,
         elevation = bottomNavigationElevation,
     ) {
-        sections.forEach { section ->
+        tabs.forEach { section ->
             BottomNavigationItem(
-                selected = section.id == currentSectionId,
-                onClick = { onSectionClicked(section.id, section.id == currentSectionId) },
+                selected = section.id == currentTab,
+                onClick = { onTabClicked(section.id, section.id == currentTab) },
                 icon = {
                     Icon(
                         modifier = Modifier.size(18.dp),
@@ -386,7 +397,7 @@ fun CircleItem(
 fun PreviewHomeLight() {
     MyTheme(darkTheme = false) {
         Surface(color = MaterialTheme.colors.background) {
-            HomeScreen()
+            Home()
         }
     }
 }
@@ -396,7 +407,7 @@ fun PreviewHomeLight() {
 fun PreviewHomeDark() {
     MyTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colors.background) {
-            HomeScreen()
+            Home()
         }
     }
 }
