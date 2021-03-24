@@ -16,7 +16,6 @@
 package dev.danielesegato.androiddevchallenge.mysoothe.login
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -54,9 +53,10 @@ fun Login(
 ) {
     var username by remember { mutableStateOf(TextFieldValue()) }
     var password by remember { mutableStateOf(TextFieldValue()) }
-    Box(
+    Surface(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        color = MaterialTheme.colors.background,
     ) {
         Image(
             modifier = Modifier
@@ -153,20 +153,16 @@ fun Login(
 
 @Preview
 @Composable
-fun PreviewLoginLight() {
+private fun PreviewLoginLight() {
     MyTheme(darkTheme = false) {
-        Surface(color = MaterialTheme.colors.background) {
-            Login()
-        }
+        Login()
     }
 }
 
 @Preview
 @Composable
-fun PreviewLoginDark() {
+private fun PreviewLoginDark() {
     MyTheme(darkTheme = true) {
-        Surface(color = MaterialTheme.colors.background) {
-            Login()
-        }
+        Login()
     }
 }

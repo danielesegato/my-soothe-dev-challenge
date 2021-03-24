@@ -17,7 +17,6 @@ package dev.danielesegato.androiddevchallenge.mysoothe.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -38,9 +37,10 @@ fun Welcome(
     onLogin: () -> Unit = {},
     onSignUp: () -> Unit = {},
 ) {
-    Box(
+    Surface(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        color = MaterialTheme.colors.background,
     ) {
         Image(
             modifier = Modifier
@@ -79,20 +79,16 @@ fun Welcome(
 
 @Preview
 @Composable
-fun PreviewWelcomeLight() {
+private fun PreviewWelcomeLight() {
     MyTheme(darkTheme = false) {
-        Surface(color = MaterialTheme.colors.background) {
-            Welcome()
-        }
+        Welcome()
     }
 }
 
 @Preview
 @Composable
-fun PreviewWelcomeDark() {
+private fun PreviewWelcomeDark() {
     MyTheme(darkTheme = true) {
-        Surface(color = MaterialTheme.colors.background) {
-            Welcome()
-        }
+        Welcome()
     }
 }

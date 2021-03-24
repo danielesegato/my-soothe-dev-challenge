@@ -100,26 +100,32 @@ val homeSections = listOf(
 
 @Composable
 fun Home() {
-    Scaffold(
-        modifier = Modifier,
-        bottomBar = {
-            HomeNavBar(
-                homeSections,
-                currentTab = Tab.Home,
-                onTabClicked = { tab, reSelection ->
-                }
+    Surface(
+        modifier = Modifier
+            .fillMaxSize(),
+        color = MaterialTheme.colors.background,
+    ) {
+        Scaffold(
+            modifier = Modifier,
+            bottomBar = {
+                HomeNavBar(
+                    homeSections,
+                    currentTab = Tab.Home,
+                    onTabClicked = { tab, reSelection ->
+                    }
+                )
+            },
+            floatingActionButton = {
+                HomeFab()
+            },
+            floatingActionButtonPosition = FabPosition.Center,
+            isFloatingActionButtonDocked = true,
+        ) { scaffoldPadding ->
+            HomeTabContent(
+                modifier = Modifier
+                    .padding(scaffoldPadding)
             )
-        },
-        floatingActionButton = {
-            HomeFab()
-        },
-        floatingActionButtonPosition = FabPosition.Center,
-        isFloatingActionButtonDocked = true,
-    ) { scaffoldPadding ->
-        HomeTabContent(
-            modifier = Modifier
-                .padding(scaffoldPadding)
-        )
+        }
     }
 }
 
@@ -182,7 +188,7 @@ private fun HomeFab(
 }
 
 @Composable
-fun <T> HomeNavBar(
+private fun <T> HomeNavBar(
     tabs: List<TabItem<T>>,
     currentTab: T = tabs[0].id,
     onTabClicked: (sectionId: T, reSelection: Boolean) -> Unit = { _, _ -> },
@@ -222,7 +228,7 @@ fun <T> HomeNavBar(
 }
 
 @Composable
-fun Search(
+private fun Search(
     modifier: Modifier = Modifier,
     onSearchChanged: (term: String) -> Unit = {},
 ) {
@@ -263,7 +269,7 @@ fun Search(
 }
 
 @Composable
-fun HomeSubSection(
+private fun HomeSubSection(
     title: String,
     content: @Composable () -> Unit
 ) {
@@ -281,7 +287,7 @@ fun HomeSubSection(
 }
 
 @Composable
-fun SingleRowCarousel(
+private fun SingleRowCarousel(
     records: List<Record>,
     itemContent: @Composable LazyItemScope.(record: Record) -> Unit
 ) {
@@ -296,7 +302,7 @@ fun SingleRowCarousel(
 }
 
 @Composable
-fun TwoRowCarousel(
+private fun TwoRowCarousel(
     records: List<Record>,
     itemContent: @Composable LazyItemScope.(record: Record) -> Unit
 ) {
@@ -319,7 +325,7 @@ fun TwoRowCarousel(
 }
 
 @Composable
-fun RectangularItem(
+private fun RectangularItem(
     record: Record,
     onItemClick: (record: Record) -> Unit = {}
 ) {
@@ -356,7 +362,7 @@ fun RectangularItem(
 }
 
 @Composable
-fun CircleItem(
+private fun CircleItem(
     record: Record,
     onItemClick: (record: Record) -> Unit = {}
 ) {
@@ -393,20 +399,16 @@ fun CircleItem(
 
 @Preview
 @Composable
-fun PreviewHomeLight() {
+private fun PreviewHomeLight() {
     MyTheme(darkTheme = false) {
-        Surface(color = MaterialTheme.colors.background) {
-            Home()
-        }
+        Home()
     }
 }
 
 @Preview
 @Composable
-fun PreviewHomeDark() {
+private fun PreviewHomeDark() {
     MyTheme(darkTheme = true) {
-        Surface(color = MaterialTheme.colors.background) {
-            Home()
-        }
+        Home()
     }
 }

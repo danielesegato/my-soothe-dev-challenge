@@ -18,8 +18,6 @@ package dev.danielesegato.androiddevchallenge.mysoothe
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
@@ -57,27 +55,24 @@ object Destinations {
 @Composable
 fun MyApp() {
     val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = Destinations.WELCOME) {
+        // animations between destination is currently (1.0.0-alpha09) not supported, see
+        // https://issuetracker.google.com/issues/172112072
+        // and I couldn't find an easy / straight forward way to animate between screens
+        // except the one suggested in that issue, which i s a bit hacky
 
-    Surface(color = MaterialTheme.colors.background) {
-        NavHost(navController = navController, startDestination = Destinations.WELCOME) {
-            // animations between destination is currently (1.0.0-alpha09) not supported, see
-            // https://issuetracker.google.com/issues/172112072
-            // and I couldn't find an easy / straight forward way to animate between screens
-            // except the one suggested in that issue, which i s a bit hacky
-
-            composable(Destinations.WELCOME) {
-                Welcome(
-                    onLogin = { navController.navigate(Destinations.LOGIN) }
-                )
-            }
-            composable(Destinations.LOGIN) {
-                Login(
-                    onLoginSuccessful = { navController.navigate(Destinations.HOME) }
-                )
-            }
-            composable(Destinations.HOME) {
-                Home()
-            }
+        composable(Destinations.WELCOME) {
+            Welcome(
+                onLogin = { navController.navigate(Destinations.LOGIN) }
+            )
+        }
+        composable(Destinations.LOGIN) {
+            Login(
+                onLoginSuccessful = { navController.navigate(Destinations.HOME) }
+            )
+        }
+        composable(Destinations.HOME) {
+            Home()
         }
     }
 }
