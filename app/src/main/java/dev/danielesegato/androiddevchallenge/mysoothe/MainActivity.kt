@@ -25,7 +25,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.insets.ProvideWindowInsets
 import dev.danielesegato.androiddevchallenge.mysoothe.home.Home
 import dev.danielesegato.androiddevchallenge.mysoothe.login.Login
 import dev.danielesegato.androiddevchallenge.mysoothe.login.Welcome
@@ -37,9 +36,7 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             MyTheme {
-                ProvideWindowInsets {
-                    MyApp()
-                }
+                MyApp()
             }
         }
     }

@@ -67,6 +67,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.CoilImage
 import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.ProvideWindowInsets
 import dev.danielesegato.androiddevchallenge.mysoothe.R
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.bottomNavigationElevation
@@ -100,32 +101,39 @@ val homeSections = listOf(
 
 @Composable
 fun Home() {
-    Surface(
-        modifier = Modifier
-            .fillMaxSize(),
-        color = MaterialTheme.colors.background,
-    ) {
-        Scaffold(
-            modifier = Modifier,
-            bottomBar = {
-                HomeNavBar(
-                    homeSections,
-                    currentTab = Tab.Home,
-                    onTabClicked = { tab, reSelection ->
-                    }
-                )
-            },
-            floatingActionButton = {
-                HomeFab()
-            },
-            floatingActionButtonPosition = FabPosition.Center,
-            isFloatingActionButtonDocked = true,
-        ) { scaffoldPadding ->
-            HomeTabContent(
-                modifier = Modifier
-                    .padding(scaffoldPadding)
-            )
+    ProvideWindowInsets {
+        Surface(
+            modifier = Modifier
+                .fillMaxSize(),
+            color = MaterialTheme.colors.background,
+        ) {
+            HomeContent()
         }
+    }
+}
+
+@Composable
+private fun HomeContent() {
+    Scaffold(
+        modifier = Modifier,
+        bottomBar = {
+            HomeNavBar(
+                homeSections,
+                currentTab = Tab.Home,
+                onTabClicked = { tab, reSelection ->
+                }
+            )
+        },
+        floatingActionButton = {
+            HomeFab()
+        },
+        floatingActionButtonPosition = FabPosition.Center,
+        isFloatingActionButtonDocked = true,
+    ) { scaffoldPadding ->
+        HomeTabContent(
+            modifier = Modifier
+                .padding(scaffoldPadding)
+        )
     }
 }
 
