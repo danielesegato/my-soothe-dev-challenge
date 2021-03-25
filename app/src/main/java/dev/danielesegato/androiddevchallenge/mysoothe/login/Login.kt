@@ -15,21 +15,28 @@
  */
 package dev.danielesegato.androiddevchallenge.mysoothe.login
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,6 +56,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -84,6 +92,10 @@ private fun LoginContent(
 ) {
     var username by remember { mutableStateOf(TextFieldValue()) }
     var password by remember { mutableStateOf(TextFieldValue()) }
+    var showClearPassword by remember { mutableStateOf(false) }
+
+    val passwordHideTransformer = remember { PasswordVisualTransformation() }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -147,7 +159,33 @@ private fun LoginContent(
                     style = MaterialTheme.typography.body1,
                 )
             },
-            visualTransformation = PasswordVisualTransformation(),
+            trailingIcon = {
+                IconButton(
+                    // this offset is because TextField has a default padding of 12dp
+                    // that cannot be overridden
+                    modifier = Modifier.offset(x = 12.dp),
+                    onClick = { showClearPassword = !showClearPassword },
+                ) {
+                    Crossfade(targetState = showClearPassword) { isClear ->
+                        if (isClear) {
+                            Icon(
+                                imageVector = Icons.Default.VisibilityOff,
+                                contentDescription = "Hide password"
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.Visibility,
+                                contentDescription = "Show password"
+                            )
+                        }
+                    }
+                }
+            },
+            visualTransformation = if (showClearPassword) {
+                VisualTransformation.None
+            } else {
+                passwordHideTransformer
+            },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
