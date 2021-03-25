@@ -290,7 +290,7 @@ private fun HomeSubSection(
     Column {
         Text(
             modifier = Modifier
-                .paddingFromBaseline(top = 40.dp)
+                .paddingFromBaseline(top = 40.dp, bottom = 8.dp)
                 .padding(horizontal = horizontalPadding),
             text = title,
             style = MaterialTheme.typography.h2,
