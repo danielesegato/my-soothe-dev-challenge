@@ -34,6 +34,13 @@ Home screen:
 
 <img src="/results/screenshot_5_home_light.png" width="260">&emsp;<img src="/results/screenshot_6_home_dark.png" width="260">
 
+## Custom Version
+
+I've made some custom modification to the design in the [custom branch](https://github.com/danielesegato/my-soothe-dev-challenge/tree/custom):
+
+- Added visibility toggle on password field
+- Custom PasswordVisibilityTransformation to show the last character the user wrote
+- "Favorite Collections" use a background extracted from the image color with Palette library
 
 ## License
 ```
