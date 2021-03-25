@@ -354,8 +354,7 @@ private fun RectangularItem(
     }
     val isLight = MaterialTheme.colors.isLight
     val defaultBackground = MaterialTheme.colors.surface
-    val backgroundColor = remember(imagePalette) {
-        imagePalette?.run {
+    val backgroundColor = imagePalette?.run {
             val color = if (isLight) {
                 this.getLightMutedColor(0)
             } else {
@@ -367,7 +366,6 @@ private fun RectangularItem(
                 defaultBackground
             }
         } ?: defaultBackground
-    }
     Surface(
         modifier = Modifier
             .clickable { onItemClick(record) },
