@@ -169,6 +169,7 @@ private fun LoginContent(
                 .paddingFromBaseline(top = 32.dp),
             text = buildAnnotatedString {
                 append(stringResource(R.string.login_label_noaccount_part1_question))
+                append(' ')
                 append(
                     AnnotatedString(
                         stringResource(R.string.login_label_noaccount_part2_signup),

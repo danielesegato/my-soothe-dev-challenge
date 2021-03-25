@@ -18,7 +18,7 @@
     <string name="login_field_email_hint">Email address</string>
     <string name="login_field_password_hint">Password</string>
     <string name="login_btn_login">LOG IN</string>
-    <string name="login_label_noaccount_part1_question">\"Don\'t have an account? \"</string>
+    <string name="login_label_noaccount_part1_question">Don\'t have an account?</string>
     <string name="login_label_noaccount_part2_signup">Sign up</string>
     <string name="home_field_search_leadingicon_desc">Search Box</string>
     <string name="home_field_search_hint">Search</string>
