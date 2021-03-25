@@ -15,6 +15,8 @@
  */
 package dev.danielesegato.androiddevchallenge.mysoothe.ui.theme
 
+import androidx.annotation.DrawableRes
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
@@ -23,8 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import dev.danielesegato.androiddevchallenge.mysoothe.R
 
 private val DarkColorPalette = darkColors(
@@ -51,9 +51,9 @@ private val LightColorPalette = lightColors(
 
 data class MySootheDrawables(
     val isLight: Boolean,
-    val logoImageVector: ImageVector,
-    val welcomeBackgroundVector: ImageVector,
-    val loginBackgroundVector: ImageVector,
+    @DrawableRes val logoImageRes: Int,
+    @DrawableRes val welcomeBackgroundRes: Int,
+    @DrawableRes val loginBackgroundRes: Int,
 )
 
 private val LocalMySootheDrawables =
@@ -67,21 +67,32 @@ fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() (
         DarkColorPalette
     } else {
         LightColorPalette
+    }.let { staticColors ->
+        staticColors.copy(
+            primary = animateColorAsState(staticColors.primary).value,
+            secondary = animateColorAsState(staticColors.secondary).value,
+            background = animateColorAsState(staticColors.background).value,
+            surface = animateColorAsState(staticColors.surface).value,
+            onPrimary = animateColorAsState(staticColors.onPrimary).value,
+            onSecondary = animateColorAsState(staticColors.onSecondary).value,
+            onBackground = animateColorAsState(staticColors.onBackground).value,
+            onSurface = animateColorAsState(staticColors.onSurface).value,
+        )
     }
 
     val themeDrawables = if (darkTheme) {
         MySootheDrawables(
             isLight = false,
-            logoImageVector = ImageVector.vectorResource(R.drawable.ic_dark_logo),
-            welcomeBackgroundVector = ImageVector.vectorResource(R.drawable.bg_dark_welcome),
-            loginBackgroundVector = ImageVector.vectorResource(R.drawable.bg_dark_login),
+            logoImageRes = R.drawable.ic_dark_logo,
+            welcomeBackgroundRes = R.drawable.bg_dark_welcome,
+            loginBackgroundRes = R.drawable.bg_dark_login,
         )
     } else {
         MySootheDrawables(
             isLight = true,
-            logoImageVector = ImageVector.vectorResource(R.drawable.ic_light_logo),
-            welcomeBackgroundVector = ImageVector.vectorResource(R.drawable.bg_light_welcome),
-            loginBackgroundVector = ImageVector.vectorResource(R.drawable.bg_light_login),
+            logoImageRes = R.drawable.ic_light_logo,
+            welcomeBackgroundRes = R.drawable.bg_light_welcome,
+            loginBackgroundRes = R.drawable.bg_light_login,
         )
     }
 
