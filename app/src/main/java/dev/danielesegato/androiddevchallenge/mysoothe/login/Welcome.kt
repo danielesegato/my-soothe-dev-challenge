@@ -18,7 +18,10 @@ package dev.danielesegato.androiddevchallenge.mysoothe.login
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -52,20 +55,24 @@ fun Welcome(
 
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
-                modifier = Modifier
-                    .padding(bottom = 32.dp),
                 imageVector = MyTheme.drawables.logoImageVector,
-                contentDescription = "",
+                contentDescription = null,
             )
+
+            Spacer(Modifier.height(32.dp))
+
             MySootheButton(
                 text = stringResource(R.string.welcome_btn_signup),
                 onClick = onSignUp,
             )
+            Spacer(Modifier.height(8.dp))
+
             MySootheButton(
                 modifier = Modifier
                     .padding(top = 8.dp),

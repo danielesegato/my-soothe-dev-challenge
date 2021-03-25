@@ -17,6 +17,7 @@ package dev.danielesegato.androiddevchallenge.mysoothe.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -68,7 +69,8 @@ fun Login(
 
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
@@ -81,15 +83,13 @@ fun Login(
             TextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(horizontal = 16.dp),
+                    .height(56.dp),
                 value = username,
                 onValueChange = { username = it },
                 singleLine = true,
                 textStyle = MaterialTheme.typography.body1,
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = MaterialTheme.colors.surface,
-                    textColor = MaterialTheme.colors.onSurface,
                 ),
                 // TODO how do I increase the indicator width?
                 placeholder = {
@@ -97,16 +97,14 @@ fun Login(
                     Text(
                         text = stringResource(R.string.login_field_email_hint),
                         style = MaterialTheme.typography.body1,
-                        color = MaterialTheme.colors.onSurface,
                     )
                 },
             )
+            Spacer(Modifier.height(8.dp))
             TextField(
                 modifier = Modifier
-                    .padding(top = 8.dp)
                     .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(horizontal = 16.dp),
+                    .height(56.dp),
                 value = password,
                 onValueChange = { password = it },
                 singleLine = true,
@@ -114,19 +112,16 @@ fun Login(
                 textStyle = MaterialTheme.typography.body1,
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = MaterialTheme.colors.surface,
-                    textColor = MaterialTheme.colors.onSurface,
                 ),
                 placeholder = {
                     Text(
                         text = stringResource(R.string.login_field_password_hint),
                         style = MaterialTheme.typography.body1,
-                        color = MaterialTheme.colors.onSurface,
                     )
                 },
             )
+            Spacer(modifier = Modifier.height(8.dp))
             MySootheButton(
-                modifier = Modifier
-                    .padding(top = 8.dp),
                 text = stringResource(R.string.login_btn_login),
                 onClick = { onLoginSuccessful() },
             )
@@ -145,7 +140,6 @@ fun Login(
                     )
                 },
                 style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colors.onBackground,
             )
         }
     }
