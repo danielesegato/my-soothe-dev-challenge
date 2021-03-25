@@ -133,6 +133,7 @@ private fun HomeContent() {
         HomeTabContent(
             modifier = Modifier
                 .padding(scaffoldPadding)
+                .verticalScroll(rememberScrollState())
         )
     }
 }
@@ -143,12 +144,10 @@ private fun HomeTabContent(
 ) {
     Column(
         modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
     ) {
-        Search(
-            Modifier.padding(top = 56.dp)
-        )
+        Spacer(modifier = Modifier.height(56.dp))
+        Search()
         HomeSubSection(title = stringResource(R.string.home_section_favcollection)) {
             TwoRowCarousel(favoriteCollection) { record ->
                 RectangularItem(
@@ -173,6 +172,7 @@ private fun HomeTabContent(
                 )
             }
         }
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 
