@@ -90,8 +90,6 @@ data class TabItem<T>(
     val icon: ImageVector,
 )
 
-val x = Icons.Default.Spa
-
 val homeSections = listOf(
     TabItem(
         Tab.Home,
