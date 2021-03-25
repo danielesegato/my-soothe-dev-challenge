@@ -20,7 +20,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import dev.danielesegato.androiddevchallenge.mysoothe.R
 
@@ -39,39 +38,39 @@ val typography = Typography(
         fontFamily = fontFamilyKulimPark,
         fontWeight = FontWeight.Light,
         fontSize = 28.sp,
-        letterSpacing = 0.15.em,
+        letterSpacing = 0.15.sp,
     ),
     h2 = TextStyle(
         fontFamily = fontFamilyKulimPark,
         fontWeight = FontWeight.Normal,
         fontSize = 15.sp,
-        letterSpacing = 0.15.em,
+        letterSpacing = 0.15.sp,
         // TODO check if we can capitalize here
     ),
     h3 = TextStyle(
         fontFamily = fontFamilyLato,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
-        letterSpacing = 0.em,
+        letterSpacing = 0.sp,
     ),
     body1 = TextStyle(
         fontFamily = fontFamilyLato,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        letterSpacing = 0.em,
+        letterSpacing = 0.sp,
     ),
     button = TextStyle(
         fontFamily = fontFamilyLato,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
-        letterSpacing = 0.15.em,
+        letterSpacing = 0.15.sp,
         // TODO check if we can capitalize here
     ),
     caption = TextStyle(
         fontFamily = fontFamilyKulimPark,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        letterSpacing = 0.15.em,
+        letterSpacing = 0.15.sp,
         // TODO check if we can capitalize here
     ),
 )
