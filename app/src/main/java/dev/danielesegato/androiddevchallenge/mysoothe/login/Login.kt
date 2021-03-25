@@ -109,6 +109,12 @@ private fun LoginContent(
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = MaterialTheme.colors.surface,
             ),
+            label = {
+                Text(
+                    text = stringResource(R.string.login_field_email_label),
+                    style = MaterialTheme.typography.body1,
+                )
+            },
             // TODO how do I increase the indicator width?
             placeholder = {
                 // TODO how do I add padding to it?
@@ -141,6 +147,12 @@ private fun LoginContent(
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = MaterialTheme.colors.surface,
             ),
+            label = {
+                Text(
+                    text = stringResource(R.string.login_field_password_label),
+                    style = MaterialTheme.typography.body1,
+                )
+            },
             placeholder = {
                 Text(
                     text = stringResource(R.string.login_field_password_hint),

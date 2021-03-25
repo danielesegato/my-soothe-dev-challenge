@@ -15,8 +15,10 @@
     <string name="welcome_btn_signup">@string/signup_capital</string>
     <string name="welcome_btn_login">@string/login_capital</string>
     <string name="login_title">@string/login_capital</string>
-    <string name="login_field_email_hint">Email address</string>
-    <string name="login_field_password_hint">Password</string>
+    <string name="login_field_email_label">Email address</string>
+    <string name="login_field_email_hint">your@email.com</string>
+    <string name="login_field_password_label">Password</string>
+    <string name="login_field_password_hint">Password (8+ characters)</string>
     <string name="login_btn_login">LOG IN</string>
     <string name="login_label_noaccount_part1_question">Don\'t have an account?</string>
     <string name="login_label_noaccount_part2_signup">Sign up</string>
