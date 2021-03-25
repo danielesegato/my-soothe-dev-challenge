@@ -50,7 +50,7 @@ val favoriteCollection = listOf(
     Record(
         "Nightly wind down",
         "https://images.pexels.com/photos/924824/pexels-photo-924824.jpeg"
-    )
+    ),
 )
 val alignYourBody = listOf(
     Record(

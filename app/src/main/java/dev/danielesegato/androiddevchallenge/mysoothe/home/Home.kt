@@ -322,18 +322,30 @@ private fun TwoRowCarousel(
     records: List<Record>,
     itemContent: @Composable LazyItemScope.(record: Record) -> Unit
 ) {
+    val chunkedRecords = remember {
+        records.chunked(2)
+            .map { chunk ->
+                if (chunk.size > 1) {
+                    chunk[0] to chunk[1]
+                } else {
+                    chunk[0] to null
+                }
+            }
+    }
     LazyRow(
         contentPadding = PaddingValues(horizontal = horizontalPadding, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(records.chunked(2)) { recordPair ->
+        items(chunkedRecords) { recordPair ->
             Column(
-                verticalArrangement = Arrangement.Top,
+                modifier = Modifier
+                    .wrapContentSize(),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                itemContent(recordPair[0])
-                if (recordPair.size > 1) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    itemContent(recordPair[1])
+                val (top, bottom) = recordPair
+                itemContent(top)
+                if (bottom != null) {
+                    itemContent(bottom)
                 }
             }
         }
