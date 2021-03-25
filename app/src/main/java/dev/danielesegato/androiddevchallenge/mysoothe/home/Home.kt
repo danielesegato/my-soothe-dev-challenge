@@ -15,7 +15,6 @@
  */
 package dev.danielesegato.androiddevchallenge.mysoothe.home
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,6 +48,11 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Spa
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,7 +66,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -84,19 +87,21 @@ enum class Tab {
 data class TabItem<T>(
     val id: T,
     @StringRes val text: Int,
-    @DrawableRes val icon: Int,
+    val icon: ImageVector,
 )
+
+val x = Icons.Default.Spa
 
 val homeSections = listOf(
     TabItem(
         Tab.Home,
         R.string.home_tab_home,
-        R.drawable.ic_baseline_spa_24,
+        Icons.Default.Spa,
     ),
     TabItem(
         Tab.Profile,
         R.string.home_tab_profile,
-        R.drawable.ic_baseline_account_circle_24,
+        Icons.Default.AccountCircle,
     )
 )
 
@@ -189,7 +194,7 @@ private fun HomeFab(
     ) {
         Icon(
             modifier = Modifier.size(24.dp),
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_play_arrow_24),
+            imageVector = Icons.Default.PlayArrow,
             tint = MaterialTheme.colors.onPrimary,
             contentDescription = stringResource(R.string.home_action_play),
         )
@@ -219,7 +224,7 @@ private fun <T> HomeNavBar(
                 icon = {
                     Icon(
                         modifier = Modifier.size(18.dp),
-                        imageVector = ImageVector.vectorResource(id = section.icon),
+                        imageVector = section.icon,
                         tint = MaterialTheme.colors.onBackground,
                         contentDescription = null,
                     )
@@ -262,7 +267,7 @@ private fun Search(
         leadingIcon = {
             Image(
                 modifier = Modifier.size(18.dp),
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_search_24),
+                imageVector = Icons.Default.Search,
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
                 contentDescription = stringResource(R.string.home_field_search_leadingicon_desc),
             )
