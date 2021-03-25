@@ -23,7 +23,8 @@
     <string name="login_label_noaccount_part1_question">Don\'t have an account?</string>
     <string name="login_label_noaccount_part2_signup">Sign up</string>
     <string name="home_field_search_leadingicon_desc">Search Box</string>
-    <string name="home_field_search_hint">Search</string>
+    <string name="home_field_search_label">Search</string>
+    <string name="home_field_search_hint">what are you looking for?</string>
     <string name="home_tab_home">HOME</string>
     <string name="home_tab_profile">PROFILE</string>
     <string name="home_section_favcollection">FAVOURITE COLLECTIONS</string>

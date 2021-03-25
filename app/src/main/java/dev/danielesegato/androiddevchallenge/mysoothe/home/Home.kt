@@ -262,7 +262,6 @@ private fun Search(
         textStyle = MaterialTheme.typography.body1,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = MaterialTheme.colors.surface,
-            textColor = MaterialTheme.colors.onSurface,
         ),
         leadingIcon = {
             Image(
@@ -272,11 +271,16 @@ private fun Search(
                 contentDescription = stringResource(R.string.home_field_search_leadingicon_desc),
             )
         },
+        label = {
+            Text(
+                text = stringResource(R.string.home_field_search_label),
+                style = MaterialTheme.typography.body1,
+            )
+        },
         placeholder = {
             Text(
                 text = stringResource(R.string.home_field_search_hint),
                 style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colors.onSurface,
             )
         },
     )
