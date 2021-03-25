@@ -169,12 +169,12 @@ private fun LoginContent(
                         if (isClear) {
                             Icon(
                                 imageVector = Icons.Default.VisibilityOff,
-                                contentDescription = "Hide password"
+                                contentDescription = stringResource(R.string.home_field_password_hide)
                             )
                         } else {
                             Icon(
                                 imageVector = Icons.Default.Visibility,
-                                contentDescription = "Show password"
+                                contentDescription = stringResource(R.string.home_field_password_show)
                             )
                         }
                     }

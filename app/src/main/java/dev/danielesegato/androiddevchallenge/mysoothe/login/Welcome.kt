@@ -63,7 +63,7 @@ fun Welcome(
         ) {
             Image(
                 painter = painterResource(id = MyTheme.drawables.logoImageRes),
-                contentDescription = null,
+                contentDescription = stringResource(R.string.welcome_logo_accessibility),
             )
 
             Spacer(Modifier.height(32.dp))
