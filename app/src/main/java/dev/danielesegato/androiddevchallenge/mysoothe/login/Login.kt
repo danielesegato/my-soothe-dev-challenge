@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -34,13 +36,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
@@ -49,12 +55,11 @@ import androidx.compose.ui.unit.dp
 import dev.danielesegato.androiddevchallenge.mysoothe.R
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 
+@ExperimentalComposeUiApi
 @Composable
 fun Login(
     onLoginSuccessful: () -> Unit = {},
 ) {
-    var username by remember { mutableStateOf(TextFieldValue()) }
-    var password by remember { mutableStateOf(TextFieldValue()) }
     Surface(
         modifier = Modifier
             .fillMaxSize(),
@@ -68,84 +73,117 @@ fun Login(
             contentScale = ContentScale.FillBounds,
         )
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(
-                modifier = Modifier
-                    .paddingFromBaseline(top = 200.dp, bottom = 32.dp),
-                style = MaterialTheme.typography.h1,
-                color = MaterialTheme.colors.onBackground,
-                text = stringResource(R.string.login_title),
-            )
-            TextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                value = username,
-                onValueChange = { username = it },
-                singleLine = true,
-                textStyle = MaterialTheme.typography.body1,
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = MaterialTheme.colors.surface,
-                ),
-                // TODO how do I increase the indicator width?
-                placeholder = {
-                    // TODO how do I add padding to it?
-                    Text(
-                        text = stringResource(R.string.login_field_email_hint),
-                        style = MaterialTheme.typography.body1,
-                    )
-                },
-            )
-            Spacer(Modifier.height(8.dp))
-            TextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                value = password,
-                onValueChange = { password = it },
-                singleLine = true,
-                visualTransformation = PasswordVisualTransformation(),
-                textStyle = MaterialTheme.typography.body1,
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = MaterialTheme.colors.surface,
-                ),
-                placeholder = {
-                    Text(
-                        text = stringResource(R.string.login_field_password_hint),
-                        style = MaterialTheme.typography.body1,
-                    )
-                },
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            MySootheButton(
-                text = stringResource(R.string.login_btn_login),
-                onClick = { onLoginSuccessful() },
-            )
-            Text(
-                modifier = Modifier
-                    .paddingFromBaseline(top = 32.dp),
-                text = buildAnnotatedString {
-                    append(stringResource(R.string.login_label_noaccount_part1_question))
-                    append(
-                        AnnotatedString(
-                            stringResource(R.string.login_label_noaccount_part2_signup),
-                            spanStyle = SpanStyle(
-                                textDecoration = TextDecoration.Underline,
-                            )
-                        ),
-                    )
-                },
-                style = MaterialTheme.typography.body1,
-            )
-        }
+        LoginContent(onLoginSuccessful)
     }
 }
 
+@ExperimentalComposeUiApi
+@Composable
+private fun LoginContent(
+    onLoginSuccessful: () -> Unit
+) {
+    var username by remember { mutableStateOf(TextFieldValue()) }
+    var password by remember { mutableStateOf(TextFieldValue()) }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        val keyboardController = LocalSoftwareKeyboardController.current
+        Text(
+            modifier = Modifier
+                .paddingFromBaseline(top = 200.dp, bottom = 32.dp),
+            style = MaterialTheme.typography.h1,
+            color = MaterialTheme.colors.onBackground,
+            text = stringResource(R.string.login_title),
+        )
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            value = username,
+            onValueChange = { username = it },
+            singleLine = true,
+            textStyle = MaterialTheme.typography.body1,
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = MaterialTheme.colors.surface,
+            ),
+            // TODO how do I increase the indicator width?
+            placeholder = {
+                // TODO how do I add padding to it?
+                Text(
+                    text = stringResource(R.string.login_field_email_hint),
+                    style = MaterialTheme.typography.body1,
+                )
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next,
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    // TODO this do not works
+                    defaultKeyboardAction(ImeAction.Next)
+                }
+            ),
+        )
+        Spacer(Modifier.height(8.dp))
+
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            value = password,
+            onValueChange = { password = it },
+            singleLine = true,
+            textStyle = MaterialTheme.typography.body1,
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = MaterialTheme.colors.surface,
+            ),
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.login_field_password_hint),
+                    style = MaterialTheme.typography.body1,
+                )
+            },
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done,
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    defaultKeyboardAction(ImeAction.Next)
+                    keyboardController?.hideSoftwareKeyboard()
+                }
+            ),
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        MySootheButton(
+            text = stringResource(R.string.login_btn_login),
+            onClick = { onLoginSuccessful() },
+        )
+        Text(
+            modifier = Modifier
+                .paddingFromBaseline(top = 32.dp),
+            text = buildAnnotatedString {
+                append(stringResource(R.string.login_label_noaccount_part1_question))
+                append(
+                    AnnotatedString(
+                        stringResource(R.string.login_label_noaccount_part2_signup),
+                        spanStyle = SpanStyle(
+                            textDecoration = TextDecoration.Underline,
+                        )
+                    ),
+                )
+            },
+            style = MaterialTheme.typography.body1,
+        )
+    }
+}
+
+@ExperimentalComposeUiApi
 @Preview
 @Composable
 private fun PreviewLoginLight() {
@@ -154,6 +192,7 @@ private fun PreviewLoginLight() {
     }
 }
 
+@ExperimentalComposeUiApi
 @Preview
 @Composable
 private fun PreviewLoginDark() {

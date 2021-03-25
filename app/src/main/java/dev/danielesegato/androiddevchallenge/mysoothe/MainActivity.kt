@@ -19,6 +19,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
@@ -31,6 +32,7 @@ import dev.danielesegato.androiddevchallenge.mysoothe.login.Welcome
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
+    @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -49,6 +51,7 @@ object Destinations {
 }
 
 // Start building your app here!
+@ExperimentalComposeUiApi
 @Composable
 fun MyApp() {
     val navController = rememberNavController()
@@ -74,6 +77,7 @@ fun MyApp() {
     }
 }
 
+@ExperimentalComposeUiApi
 @Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun LightPreview() {
@@ -82,6 +86,7 @@ fun LightPreview() {
     }
 }
 
+@ExperimentalComposeUiApi
 @Preview("Dark Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun DarkPreview() {
