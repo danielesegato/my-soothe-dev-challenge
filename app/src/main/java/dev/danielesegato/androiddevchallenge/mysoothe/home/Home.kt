@@ -17,12 +17,8 @@ package dev.danielesegato.androiddevchallenge.mysoothe.home
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,10 +26,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -58,10 +50,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
@@ -69,13 +58,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.coil.CoilImage
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import dev.danielesegato.androiddevchallenge.mysoothe.R
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.MyTheme
 import dev.danielesegato.androiddevchallenge.mysoothe.ui.theme.bottomNavigationElevation
-import kotlin.math.roundToInt
 
 val horizontalPadding = 16.dp
 
@@ -153,23 +140,34 @@ private fun HomeTabContent(
         Spacer(modifier = Modifier.height(56.dp))
         Search()
         HomeSubSection(title = stringResource(R.string.home_section_favcollection)) {
-            TwoRowCarousel(favoriteCollection) { record ->
+            TwoRowCarousel(
+                records = favoriteCollection,
+                contentPadding = PaddingValues(horizontal = horizontalPadding, vertical = 0.dp),
+            ) { record ->
                 RectangularItem(
                     record,
                     onItemClick = {},
                 )
             }
         }
+        Spacer(modifier = Modifier.height(8.dp))
         HomeSubSection(title = stringResource(R.string.home_section_alignbody)) {
-            SingleRowCarousel(alignYourBody) { record ->
+            SingleRowCarousel(
+                records = alignYourBody,
+                contentPadding = PaddingValues(horizontal = horizontalPadding, vertical = 0.dp),
+            ) { record ->
                 CircleItem(
                     record,
                     onItemClick = {},
                 )
             }
         }
+        Spacer(modifier = Modifier.height(8.dp))
         HomeSubSection(title = stringResource(R.string.home_section_alignmind)) {
-            SingleRowCarousel(alignYourMind) { record ->
+            SingleRowCarousel(
+                records = alignYourMind,
+                contentPadding = PaddingValues(horizontal = horizontalPadding, vertical = 0.dp)
+            ) { record ->
                 CircleItem(
                     record,
                     onItemClick = {},
@@ -299,137 +297,6 @@ private fun HomeSubSection(
             color = MaterialTheme.colors.onBackground,
         )
         content()
-    }
-}
-
-@Composable
-private fun SingleRowCarousel(
-    records: List<Record>,
-    itemContent: @Composable LazyItemScope.(record: Record) -> Unit
-) {
-    LazyRow(
-        contentPadding = PaddingValues(horizontal = horizontalPadding, vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        items(records) { record ->
-            itemContent(record)
-        }
-    }
-}
-
-@Composable
-private fun TwoRowCarousel(
-    records: List<Record>,
-    itemContent: @Composable LazyItemScope.(record: Record) -> Unit
-) {
-    val chunkedRecords = remember {
-        records.chunked(2)
-            .map { chunk ->
-                if (chunk.size > 1) {
-                    chunk[0] to chunk[1]
-                } else {
-                    chunk[0] to null
-                }
-            }
-    }
-    LazyRow(
-        contentPadding = PaddingValues(horizontal = horizontalPadding, vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        items(chunkedRecords) { recordPair ->
-            Column(
-                modifier = Modifier
-                    .wrapContentSize(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                val (top, bottom) = recordPair
-                itemContent(top)
-                if (bottom != null) {
-                    itemContent(bottom)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun RectangularItem(
-    record: Record,
-    onItemClick: (record: Record) -> Unit = {}
-) {
-    Surface(
-        modifier = Modifier
-            .clickable { onItemClick(record) },
-        color = MaterialTheme.colors.surface,
-        shape = MaterialTheme.shapes.small,
-    ) {
-        Row(
-            modifier = Modifier
-                .size(width = 192.dp, height = 56.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            CoilImage(
-                modifier = Modifier.size(56.dp),
-                data = record.squareImageUrlOfSize((56.dp).value.roundToInt()),
-                contentDescription = null,
-                loading = {
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(MaterialTheme.colors.secondary),
-                    )
-                },
-            )
-            Text(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .wrapContentSize(align = Alignment.CenterStart),
-                text = record.title,
-                style = MaterialTheme.typography.h3,
-            )
-        }
-    }
-}
-
-@Composable
-private fun CircleItem(
-    record: Record,
-    onItemClick: (record: Record) -> Unit = {}
-) {
-    Surface(
-        modifier = Modifier
-            .clickable { onItemClick(record) },
-        color = Color.Transparent,
-        shape = MaterialTheme.shapes.small,
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            CoilImage(
-                modifier = Modifier
-                    .size(88.dp)
-                    .clip(CircleShape),
-                data = record.squareImageUrlOfSize((88.dp).value.roundToInt()),
-                contentDescription = null,
-                loading = {
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(MaterialTheme.colors.secondary),
-                    )
-                },
-            )
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .paddingFromBaseline(24.dp)
-                    .wrapContentSize(align = Alignment.Center),
-                text = record.title,
-                style = MaterialTheme.typography.h3,
-                color = MaterialTheme.colors.onBackground,
-            )
-        }
     }
 }
 
