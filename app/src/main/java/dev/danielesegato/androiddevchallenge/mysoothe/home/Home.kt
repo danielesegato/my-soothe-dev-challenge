@@ -57,6 +57,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
@@ -337,35 +338,38 @@ private fun RectangularItem(
     record: Record,
     onItemClick: (record: Record) -> Unit = {}
 ) {
-    Row(
+    Surface(
         modifier = Modifier
-            .size(width = 192.dp, height = 56.dp)
-            .clip(MaterialTheme.shapes.small)
-            .background(MaterialTheme.colors.surface)
             .clickable { onItemClick(record) },
-        verticalAlignment = Alignment.CenterVertically,
+        color = MaterialTheme.colors.surface,
+        shape = MaterialTheme.shapes.small,
     ) {
-        CoilImage(
-            modifier = Modifier.size(56.dp),
-            data = record.squareImageUrlOfSize((56.dp).value.roundToInt()),
-            contentDescription = null,
-            loading = {
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colors.secondary),
-                )
-            },
-        )
-        Text(
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .wrapContentSize(align = Alignment.CenterStart),
-            text = record.title,
-            style = MaterialTheme.typography.h3,
-            color = MaterialTheme.colors.onSurface,
-        )
+                .size(width = 192.dp, height = 56.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            CoilImage(
+                modifier = Modifier.size(56.dp),
+                data = record.squareImageUrlOfSize((56.dp).value.roundToInt()),
+                contentDescription = null,
+                loading = {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colors.secondary),
+                    )
+                },
+            )
+            Text(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .wrapContentSize(align = Alignment.CenterStart),
+                text = record.title,
+                style = MaterialTheme.typography.h3,
+            )
+        }
     }
 }
 
@@ -374,34 +378,39 @@ private fun CircleItem(
     record: Record,
     onItemClick: (record: Record) -> Unit = {}
 ) {
-    Column(
+    Surface(
         modifier = Modifier
             .clickable { onItemClick(record) },
-        horizontalAlignment = Alignment.CenterHorizontally,
+        color = Color.Transparent,
+        shape = MaterialTheme.shapes.small,
     ) {
-        CoilImage(
-            modifier = Modifier
-                .size(88.dp)
-                .clip(CircleShape),
-            data = record.squareImageUrlOfSize((88.dp).value.roundToInt()),
-            contentDescription = null,
-            loading = {
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colors.secondary),
-                )
-            },
-        )
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingFromBaseline(24.dp)
-                .wrapContentSize(align = Alignment.Center),
-            text = record.title,
-            style = MaterialTheme.typography.h3,
-            color = MaterialTheme.colors.onBackground,
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            CoilImage(
+                modifier = Modifier
+                    .size(88.dp)
+                    .clip(CircleShape),
+                data = record.squareImageUrlOfSize((88.dp).value.roundToInt()),
+                contentDescription = null,
+                loading = {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colors.secondary),
+                    )
+                },
+            )
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .paddingFromBaseline(24.dp)
+                    .wrapContentSize(align = Alignment.Center),
+                text = record.title,
+                style = MaterialTheme.typography.h3,
+                color = MaterialTheme.colors.onBackground,
+            )
+        }
     }
 }
 
